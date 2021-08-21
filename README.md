@@ -1,3 +1,6 @@
+# Reports
+
+[Midterm report](midterm_report.md)
 
 # SDCND : Sensor Fusion and Tracking
 This is the project for the second course in the  [Udacity Self-Driving Car Engineer Nanodegree Program](https://www.udacity.com/course/c-plus-plus-nanodegree--nd213) : Sensor Fusion and Tracking. 
