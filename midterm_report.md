@@ -1,21 +1,21 @@
 ## Find and display 6 examples of vehicles with varying degrees of visibility in the point-cloud
 
-### rear view of car in front
+#### rear view of car in front
 ![](img/6.png)
 
-### front view of car behind
+#### front view of car behind
 ![](img/5.png)
 
-### full side view
+#### full side view
 ![](img/4.png)
 
-### very close-by
+#### very close-by
 ![](img/2.png)
 
-### occluded by another car 
+#### occluded by another car 
 ![](img/3.png)
 
-### truck behind trees
+#### truck behind trees
 ![](img/7.png)
 
 ## Identify vehicle features that appear as a stable feature on most vehicles (e.g. rear-bumper, tail-lights) and describe them briefly. Also, use the range image viewer from the last example to underpin your findings using the lidar intensity channel.
@@ -51,4 +51,18 @@ A few features are visible in the above range image.
 - Red boxes are tail-lights.
 - Yellow boxes are rear bumpers.
 - Green boxes are license plates.
+
+## Help needed
+
+I seem to have a hard time to get ID_S3_EX2 right, specifically L241-247 in `objdet_detect.py`.
+
+The output of ID_S3_EX1 is in line with the expected results.
+
+![](img/10.png)
+
+But the BEV-to-vehicle tranformation seems to be off:
+
+![](img/9.png)
+
+Please help point out what is wrong. Thanks.
 

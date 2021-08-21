@@ -87,6 +87,9 @@ def show_range_image(frame, lidar_name):
         ri = dataset_pb2.MatrixFloat()
         ri.ParseFromString(zlib.decompress(lidar.ri_return1.range_image_compressed))
         ri = np.array(ri.data).reshape(ri.shape.dims)
+        # Crop range image to +/- 90 deg. left and right of the forward-facing x-axis
+        center = ri.shape[1] // 2
+        ri = ri[:, center - ri.shape[1] // 4 : center + ri.shape[1] // 4]
 
     # step 2 : extract the range and the intensity channel from the range image
     ri_range = ri[:, :, 0]
@@ -156,7 +159,7 @@ def bev_from_pcl(lidar_pcl, configs):
     print("student task ID_S2_EX2")
 
     ## step 1 : create a numpy array filled with zeros which has the same dimensions as the BEV map
-    intensity_map = np.zeros((bev_height + 1, bev_width + 1))
+    intensity_map = np.zeros((bev_height, bev_width))
 
     # step 2 : re-arrange elements in lidar_pcl_cpy by sorting first by x, then y, then -z (use numpy.lexsort)
     lidar_pcl_cpy[lidar_pcl_cpy[:, 3] > 1.0, 3] = 1.0  # cap intensity at 1
@@ -195,7 +198,7 @@ def bev_from_pcl(lidar_pcl, configs):
     print("student task ID_S2_EX3")
 
     ## step 1 : create a numpy array filled with zeros which has the same dimensions as the BEV map
-    height_map = np.zeros((bev_height + 1, bev_width + 1))
+    height_map = np.zeros((bev_height, bev_width))
 
     ## step 2 : assign the height value of each unique entry in lidar_top_pcl to the height map 
     ##          make sure that each entry is normalized on the difference between the upper and lower height defined in the config file
@@ -219,7 +222,7 @@ def bev_from_pcl(lidar_pcl, configs):
     ####### ID_S2_EX3 END #######       
 
     # Compute density layer of the BEV map
-    density_map = np.zeros((configs.bev_height + 1, configs.bev_width + 1))
+    density_map = np.zeros((configs.bev_height, configs.bev_width))
     _, _, counts = np.unique(lidar_pcl_cpy[:, 0:2], axis=0, return_index=True, return_counts=True)
     normalizedCounts = np.minimum(1.0, np.log(counts + 1) / np.log(64))
     density_map[np.int_(lidar_pcl_top[:, 0]), np.int_(lidar_pcl_top[:, 1])] = normalizedCounts
