@@ -39,23 +39,36 @@ def show_pcl(pcl):
     print("student task ID_S1_EX2")
 
     # step 1 : initialize open3d with key callback and create window
-    if not hasattr(show_pcl, 'vis'):
-        show_pcl.vis = o3d.visualization.VisualizerWithKeyCallback()
-        show_pcl.vis.register_key_callback(262, lambda vis: vis.close())
-        show_pcl.vis.create_window()
-        # step 2 : create instance of open3d point-cloud class
-        show_pcl.pcd = o3d.geometry.PointCloud()
-        # step 3 : set points in pcd instance by converting the point-cloud into 3d vectors (using open3d function Vector3dVector)
-        show_pcl.pcd.points = o3d.utility.Vector3dVector(pcl[:, :3])
-        # step 4 : for the first frame, add the pcd instance to visualization using add_geometry; for all other frames, use update_geometry instead
-        show_pcl.vis.add_geometry(show_pcl.pcd)
-    else:
-        show_pcl.pcd.points = o3d.utility.Vector3dVector(pcl[:, :3])
-        show_pcl.vis.update_geometry(show_pcl.pcd)
+    show_pcl.vis = o3d.visualization.VisualizerWithKeyCallback()
+    show_pcl.vis.register_key_callback(262, lambda vis: vis.close())
+    show_pcl.vis.create_window()
+    # step 2 : create instance of open3d point-cloud class
+    show_pcl.pcd = o3d.geometry.PointCloud()
+    # step 3 : set points in pcd instance by converting the point-cloud into 3d vectors (using open3d function Vector3dVector)
+    show_pcl.pcd.points = o3d.utility.Vector3dVector(pcl[:, :3])
+    # step 4 : for the first frame, add the pcd instance to visualization using add_geometry; for all other frames, use update_geometry instead
+    show_pcl.vis.add_geometry(show_pcl.pcd)
+    show_pcl.vis.run()
 
-    # step 5 : visualize point cloud and keep window open until right-arrow is pressed (key-code 262)
-    show_pcl.vis.poll_events()
-    show_pcl.vis.update_renderer()
+    ### The following is a non-blocking version that shows animation of the pcl
+    # step 1 : initialize open3d with key callback and create window
+    # if not hasattr(show_pcl, 'vis'):
+    #     show_pcl.vis = o3d.visualization.VisualizerWithKeyCallback()
+    #     show_pcl.vis.register_key_callback(262, lambda vis: vis.close())
+    #     show_pcl.vis.create_window()
+    #     # step 2 : create instance of open3d point-cloud class
+    #     show_pcl.pcd = o3d.geometry.PointCloud()
+    #     # step 3 : set points in pcd instance by converting the point-cloud into 3d vectors (using open3d function Vector3dVector)
+    #     show_pcl.pcd.points = o3d.utility.Vector3dVector(pcl[:, :3])
+    #     # step 4 : for the first frame, add the pcd instance to visualization using add_geometry; for all other frames, use update_geometry instead
+    #     show_pcl.vis.add_geometry(show_pcl.pcd)
+    # else:
+    #     show_pcl.pcd.points = o3d.utility.Vector3dVector(pcl[:, :3])
+    #     show_pcl.vis.update_geometry(show_pcl.pcd)
+    #
+    # # step 5 : visualize point cloud and keep window open until right-arrow is pressed (key-code 262)
+    # show_pcl.vis.poll_events()
+    # show_pcl.vis.update_renderer()
 
     #######
     ####### ID_S1_EX2 END #######     
