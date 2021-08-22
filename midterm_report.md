@@ -75,6 +75,8 @@ l = _l * (configs.lim_x[1] - configs.lim_x[0]) / configs.bev_height
 yaw = -_yaw
 ```
 
+![](img/11.png)
+
 However, I don't understand why we need to swap X and Y. My mental model of the BEV and vehicle frames is as follows:
 
 ![](img/coord.png)
