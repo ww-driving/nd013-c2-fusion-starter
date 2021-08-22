@@ -62,9 +62,9 @@ def measure_detection_performance(detections, labels, labels_valid, min_iou=0.5)
                 bb_det = tools.compute_box_corners(x, y, w, l, yaw)
                 bb_det = Polygon(bb_det)
                 ## step 4 : computer the center distance between label and detection bounding-box in x, y, and z
-                dist_x = np.abs(bb_label.centroid.x - bb_det.centroid.x)
-                dist_y = np.abs(bb_label.centroid.y - bb_det.centroid.y)
-                dist_z = np.abs(label.box.center_z - z / 2.)
+                dist_x = bb_label.centroid.x - bb_det.centroid.x
+                dist_y = bb_label.centroid.y - bb_det.centroid.y
+                dist_z = label.box.center_z - z / 2.
                 ## step 5 : compute the intersection over union (IOU) between label and detection bounding-box
                 iou = bb_label.intersection(bb_det).area / bb_label.union(bb_det).area
                 ## step 6 : if IOU exceeds min_iou threshold, store [iou,dist_x, dist_y, dist_z] in matches_lab_det and increase the TP count
