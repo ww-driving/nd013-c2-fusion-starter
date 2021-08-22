@@ -239,9 +239,9 @@ def detect_objects(input_bev_maps, model, configs):
             ## step 3 : perform the conversion using the limits for x, y and z set in the configs structure
             clz, _x, _y, _z, h, _w, _l, _yaw = det
             # convert from pixel into metric coordinates
-            x = _y / configs.bev_height * (configs.lim_y[1] - configs.lim_y[0])
-            y = (_x - configs.bev_width // 2) / configs.bev_height * (configs.lim_x[1] - configs.lim_x[0])
-            z = _z
+            x = _y / configs.bev_width * (configs.lim_y[1] - configs.lim_y[0])
+            y = (_x - configs.bev_height // 2) / configs.bev_height * (configs.lim_x[1] - configs.lim_x[0])
+            z = _z + configs.lim_z[0]
             w = _w * (configs.lim_y[1] - configs.lim_y[0]) / configs.bev_width
             l = _l * (configs.lim_x[1] - configs.lim_x[0]) / configs.bev_height
             yaw = -_yaw

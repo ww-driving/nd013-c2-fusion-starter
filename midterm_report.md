@@ -64,5 +64,19 @@ But the BEV-to-vehicle tranformation seems to be off:
 
 ![](img/9.png)
 
-Please help point out what is wrong. Thanks.
+Update: I managed to make the coordinates right with:
 
+```
+x = _y / configs.bev_width * (configs.lim_y[1] - configs.lim_y[0])
+y = (_x - configs.bev_height // 2) / configs.bev_height * (configs.lim_x[1] - configs.lim_x[0])
+z = _z + configs.lim_z[0]
+w = _w * (configs.lim_y[1] - configs.lim_y[0]) / configs.bev_width
+l = _l * (configs.lim_x[1] - configs.lim_x[0]) / configs.bev_height
+yaw = -_yaw
+```
+
+However, I don't understand why we need to swap X and Y. My mental model of the BEV and vehicle frames is as follows:
+
+![](img/coord.png)
+
+which doesn't seem to require such a swap. Does the darknet/resnet model swap X-Y during inference? Is the calculation of `z` correct?
