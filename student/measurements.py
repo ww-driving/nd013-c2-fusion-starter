@@ -48,7 +48,13 @@ class Sensor:
         # otherwise False.
         ############
 
-        return True
+        pos = np.ones((4,1))
+        pos[0:3] = x[0:3]
+        pos = self.veh_to_sens @ pos
+        angle = np.arctan2(pos[1], pos[0])
+        in_fov = (angle > self.fov[0]) and (angle < self.fov[1])
+
+        return in_fov
         
         ############
         # END student code
