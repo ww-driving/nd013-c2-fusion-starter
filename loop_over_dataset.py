@@ -22,6 +22,7 @@ import sys
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
+
 np.set_printoptions(suppress=True)
 
 ## Add current working directory to path
@@ -85,7 +86,7 @@ np.random.seed(10)  # make random values predictable
 exec_detection = []
 exec_tracking = ['perform_tracking']  # options are 'perform_tracking'
 # options are 'show_range_image', 'show_bev', 'show_pcl', 'show_labels_in_image', 'show_objects_and_labels_in_bev', 'show_objects_in_bev_labels_in_camera', 'show_tracks', 'show_detection_performance', 'make_tracking_movie'
-exec_visualization = ['show_tracks']
+exec_visualization = ['show_tracks', 'make_tracking_movie']
 exec_list = make_exec_list(exec_detection, exec_tracking, exec_visualization)
 vis_pause_time = 0  # set pause time between frames in ms (0 = stop between frames until key is pressed)
 
@@ -264,7 +265,8 @@ while True:
 
             # visualization
             if 'show_tracks' in exec_list:
-                fig, ax, ax2 = plot_tracks(fig, ax, ax2, manager.track_list, meas_list_lidar, frame.laser_labels,
+                fig, ax, ax2 = plot_tracks(fig, ax, ax2, manager.track_list, [*meas_list_lidar, *meas_list_cam],
+                                           frame.laser_labels,
                                            valid_label_flags, image, camera, configs_det)
                 if 'make_tracking_movie' in exec_list:
                     # save track plots to file

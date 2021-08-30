@@ -139,7 +139,15 @@ def plot_tracks(fig, ax, ax2, track_list, meas_list, lidar_labels, lidar_labels_
             ax.scatter(-1*label.box.center_y, label.box.center_x, color='gray', s=80, marker='+', label='ground truth')
     # plot measurements
     for meas in meas_list:
-        ax.scatter(-1*meas.z[1], meas.z[0], color='blue', marker='.', label='measurement')
+        if meas.sensor.name == 'lidar':
+            ax.scatter(-1*meas.z[1], meas.z[0], color='blue', marker='.', label='lidar measurement')
+    
+    # plot camera detections
+    for meas in meas_list:
+        if meas.sensor.name == 'camera':
+            rect = patches.Rectangle((meas.z[0, 0] - meas.length // 2, meas.z[1, 0] - meas.width // 2),
+                                     meas.length, meas.width, linewidth=1, edgecolor='r', facecolor='none')
+            ax2.add_patch(rect)
     
     # maximize window        
     mng = plt.get_current_fig_manager()

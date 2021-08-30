@@ -102,6 +102,7 @@ class Trackmanagement:
         ############
 
         # decrease score for unassigned tracks
+        to_delete = []
         for i in unassigned_tracks:
             track = self.track_list[i]
             # check visibility    
@@ -118,7 +119,10 @@ class Trackmanagement:
                         threshold = params.tentative_delete_threshold
 
                     if track.score < threshold or track.P[0, 0] > params.max_P or track.P[1, 1] > params.max_P:
-                        self.delete_track(track)
+                        to_delete.append(track)
+        
+        for track in to_delete:
+            self.delete_track(track)
 
         ############
         # END student code
